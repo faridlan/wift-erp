@@ -1,0 +1,21 @@
+# Database sensitif (JANGAN di-commit)
+supabase/.temp
+supabase/.branches
+supabase/debug.log
+
+# Environment variables (Berisi key rahasia seperti service_role)
+.env
+.env.local
+
+# Node modules
+node_modules/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db

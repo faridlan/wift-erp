@@ -1,3 +1,11 @@
+-- 0. Seed Roles (idempotent: skip if already exists from migration)
+INSERT INTO public.roles (code, name)
+VALUES
+  ('superadmin', 'Super Admin'),
+  ('admin', 'Admin'),
+  ('sales', 'Sales')
+ON CONFLICT (code) DO NOTHING;
+
 -- 1. Insert Users ke Auth (Password: 'password123')
 -- Kita buat satu Admin dan satu Sales
 INSERT INTO
@@ -32,11 +40,14 @@ VALUES (
         'sales'
     );
 
--- 2. Update Role Admin (karena trigger defaultnya adalah 'sales')
+-- 2. Update Role: user pertama = superadmin (hanya 1 akun), user kedua = sales
 UPDATE public.profiles
-SET role = 'admin'
-WHERE
-    id = '00000000-0000-0000-0000-000000000001';
+SET role = 'superadmin'
+WHERE id = '00000000-0000-0000-0000-000000000001';
+
+UPDATE public.profiles
+SET role = 'sales'
+WHERE id = '00000000-0000-0000-0000-000000000002';
 
 -- 3. Insert Pelanggan (Customers)
 INSERT INTO
